@@ -50,7 +50,9 @@
     <loggers>
         <!--过滤掉spring和mybatis的一些无用的DEBUG信息-->
         <logger name="org.springframework" level="INFO" />
-        <root level="all">
+        <logger name="org.hibernate" level="INFO" />
+        <logger name="com.zaxxer.hikari" level="INFO" />
+        <root level="INFO">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFileInfo"/>
             <appender-ref ref="RollingFileWarn"/>

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: jpa-demo
+  output:
+    ansi:
+      enabled: always
+
+logging:
+  pattern:
+    # 控制台日志格式
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(%-40.40logger{39}){cyan} : %msg%n"

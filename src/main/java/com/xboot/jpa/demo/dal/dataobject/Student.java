@@ -1,12 +1,13 @@
 package com.xboot.jpa.demo.dal.dataobject;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Generated;
 import org.hibernate.annotations.GenerationTime;
-import org.hibernate.generator.EventType;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
 import java.time.LocalDateTime;
 
 /**
@@ -33,13 +34,13 @@ public class Student {
     private String address;
     @Column(name = "director")
     @ColumnDefault("'staff 100'")
-    @Generated
+    @Generated(value = GenerationTime.INSERT)
     private String director; // 班主任
     @Column(name = "CREATE_TIME", columnDefinition = "timestamp default current_timestamp")
-    @Generated
+    @Generated(value = GenerationTime.INSERT)
     private LocalDateTime createTime;
 
     @Column(name = "UPDATE_TIME", columnDefinition = "timestamp default current_timestamp on update current_timestamp")
-    @Generated(event = EventType.UPDATE)
+    @Generated(value = GenerationTime.INSERT)
     private LocalDateTime updateTime;
 }

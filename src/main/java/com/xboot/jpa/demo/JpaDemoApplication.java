@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Profile;
 public class JpaDemoApplication {
 
 	public static void main(String[] args) {
+		System.setProperty("spring.profiles.active", "test");
 		SpringApplication.run(JpaDemoApplication.class, args);
 	}
 

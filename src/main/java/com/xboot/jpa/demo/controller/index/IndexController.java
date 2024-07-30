@@ -3,13 +3,13 @@ package com.xboot.jpa.demo.controller.index;
 import com.xboot.jpa.demo.common.rs.Result;
 import com.xboot.jpa.demo.dal.dataobject.Student;
 import com.xboot.jpa.demo.service.StudentService;
-import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**

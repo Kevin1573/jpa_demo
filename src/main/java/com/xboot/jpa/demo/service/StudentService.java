@@ -11,4 +11,10 @@ import java.util.List;
  **/
 public interface StudentService {
     List<Student> getStudents();
+
+    Student createStu(Student student);
+
+    Student getResultCondition();
+
+    void updateById(Long id);
 }

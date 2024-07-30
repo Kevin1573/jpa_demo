@@ -7,8 +7,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 注释
@@ -21,7 +25,23 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     @Override
     public List<Student> getStudents() {
-        Page<Student> studentPage = studentRepository.findAll(PageRequest.of(1, 10));
+        Page<Student> studentPage = studentRepository.findAll(PageRequest.of(0, 10));
         return studentPage.getContent();
+    }
+
+    @Override
+    public Student createStu(Student student) {
+        return studentRepository.save(student);
+    }
+
+    @Override
+    public Student getResultCondition() {
+        return studentRepository.findByNameAndStateAllIgnoringCase("student", "normal");
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateById(Long id) {
+        studentRepository.updateStudent(LocalDateTime.now(), id);
     }
 }

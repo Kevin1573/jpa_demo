@@ -24,7 +24,7 @@ spring:
     init:
       # mode: always
       data-locations:
-        - classpath:schema.sql
+        - classpath:schema-BACK.sql
 
 
 logging:

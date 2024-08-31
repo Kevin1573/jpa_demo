@@ -1,9 +1,34 @@
 spring:
   datasource:
     #url: jdbc:h2:tcp://localhost//D:/h2/test;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
-    url: jdbc:h2:file:D:/h2/test;DB_CLOSE_DELAY=-1;AUTO_RECONNECT=TRUE;MODE=PostgreSQL
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-#    schema: classpath:db/schema.sql
-#    data: classpath:db/schema.sql
+    #url: jdbc:h2:file:D:/h2/test;DB_CLOSE_DELAY=-1;AUTO_RECONNECT=TRUE;MODE=PostgreSQL
+#    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;AUTO_RECONNECT=TRUE;MODE=PostgreSQL
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+    # mysql
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: admin1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        ddl-auto: create-drop
+        dialect: org.hibernate.dialect.H2Dialect
+        default_schema: public
+        hbm2ddl: create-drop
+
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: ALWAYS
+      data-locations:
+        - classpath:data.sql
+  liquibase:
+    enabled: true
+    change-log: classpath:db/liquibase/master.yaml
+    contexts: test

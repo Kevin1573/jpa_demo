@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 import org.hibernate.generator.EventType;
 
 import java.time.LocalDateTime;
@@ -19,15 +18,15 @@ import java.time.LocalDateTime;
 @Table(name = "pt_student")
 public class Student {
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "pt_student_seq", sequenceName = "pt_student_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     // 非空
     @Column(length = 600, nullable = false)
     private String name;
     private Integer age;
-    // 非空
-    @Column(nullable = false)
-    // @Column(name = "state", columnDefinition = "tinyint default 0")
+
+    @Column(name = "state", columnDefinition = "default null")
     private String state;
     private Integer grade;
     private String address;

@@ -18,7 +18,7 @@ public class CityServiceImpl implements CityService {
 
     private final CityRepository repository;
 
-    //@Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int updateCity(City city) {
         return repository.updateNativeV2(city.getName(), city.getState(), city.getId());

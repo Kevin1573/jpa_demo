@@ -38,7 +38,7 @@ public class Student {
     @Generated
     private LocalDateTime createTime;
 
-    @Column(name = "UPDATE_TIME", columnDefinition = "timestamp default current_timestamp on update current_timestamp")
+    @Column(name = "UPDATE_TIME", columnDefinition = "timestamp default current_timestamp")
     @Generated(event = EventType.UPDATE)
     private LocalDateTime updateTime;
 }

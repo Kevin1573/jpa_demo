@@ -2,7 +2,7 @@ spring:
   application:
     name: jpa-demo
   profiles:
-    active: dev
+    active: pg
   output:
     ansi:
       enabled: always

@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202408312346
+      author: jpa-demo
+      changes:
+        - createTable:
+            tableName: pt_book
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: author
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: decimal(16, 2)
+              - column:
+                  name: content
+                  type: varchar(255)
+

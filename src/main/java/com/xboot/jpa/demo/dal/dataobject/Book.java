@@ -3,6 +3,7 @@ package com.xboot.jpa.demo.dal.dataobject;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "pt_book")
+@DynamicUpdate
 public class Book implements Serializable {
     @Serial
     private static final long serialVersionUID = -1981022477637389083L;

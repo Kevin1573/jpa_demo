@@ -26,7 +26,7 @@ public class Student {
     private String name;
     private Integer age;
 
-    @Column(name = "state", columnDefinition = "default null")
+    @Column(name = "state", nullable = false)
     private String state;
     private Integer grade;
     private String address;

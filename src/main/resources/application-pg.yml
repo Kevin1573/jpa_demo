@@ -1,4 +1,7 @@
 spring:
+  output:
+    ansi:
+      enabled: always
   datasource:
     url: jdbc:postgresql://10.10.10.190:5432/postgres
     username: postgres
@@ -10,10 +13,11 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate_ddl: true
+    # map[string,string]
     properties:
-      hibernate:
-        format_sql: true
-        default_schema: public
+      hibernate.format_sql: true
+      hibernate.default_schema: public
     open-in-view: false
   sql:
     init:

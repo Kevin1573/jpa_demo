@@ -15,11 +15,10 @@ spring:
     defer-datasource-initialization: false
     hibernate:
       ddl-auto: none # auto create table if not exists
-#    database-platform: org.hibernate.dialect.PostgreSQLDialect  # default
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     generate_ddl: false
     # map[string,string]
     properties:
-      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
       hibernate.format_sql: true
       hibernate.default_schema: public
     open-in-view: false
@@ -39,11 +38,10 @@ spring:
     enabled: true
     change-log: classpath:liquibase/master.xml
     contexts: test
-#p6spy:
-#  config:
-#    appender: com.p6spy.engine.spy.appender.Slf4JLogger
-#    logMessageFormat: com.p6spy.engine.spy.appender.CustomLineFormat
-#    customLogMessageFormat: executionTime:%(executionTime)| 执行sql:%(sqlSingleLine)
+# p6spy sql打印
+decorator:
+  datasource:
+    enabled: true # 是否启用
 
 #logging:
 #  level:

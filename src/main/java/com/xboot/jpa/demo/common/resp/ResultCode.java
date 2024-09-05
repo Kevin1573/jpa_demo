@@ -1,4 +1,4 @@
-package com.xboot.jpa.demo.common.rs;
+package com.xboot.jpa.demo.common.resp;
 
 /**
  * @Description: 返回码定义

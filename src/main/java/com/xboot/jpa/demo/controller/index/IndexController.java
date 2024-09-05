@@ -1,6 +1,6 @@
 package com.xboot.jpa.demo.controller.index;
 
-import com.xboot.jpa.demo.common.rs.Result;
+import com.xboot.jpa.demo.common.resp.Result;
 import com.xboot.jpa.demo.dal.dataobject.Student;
 import com.xboot.jpa.demo.service.StudentService;
 import jakarta.websocket.server.PathParam;
@@ -23,7 +23,6 @@ import java.util.List;
 @Slf4j
 public class IndexController {
     private final StudentService studentService;
-
 
     @GetMapping("/hello")
     public Result hello() {

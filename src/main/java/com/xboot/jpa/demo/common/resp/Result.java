@@ -1,4 +1,4 @@
-package com.xboot.jpa.demo.common.rs;
+package com.xboot.jpa.demo.common.resp;
 
 import com.xboot.jpa.demo.common.ApiModelProperty;
 import lombok.Data;

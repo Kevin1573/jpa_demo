@@ -27,6 +27,7 @@ public class StudentServiceImpl implements StudentService {
         return studentPage.getContent();
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Student createStu(Student student) {
         return studentRepository.save(student);

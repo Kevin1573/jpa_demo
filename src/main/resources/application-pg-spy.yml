@@ -15,7 +15,7 @@ spring:
     defer-datasource-initialization: false
     hibernate:
       ddl-auto: none # auto create table if not exists
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect  # default
     generate_ddl: false
     # map[string,string]
     properties:

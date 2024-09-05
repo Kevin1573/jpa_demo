@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Generated;
-import org.hibernate.generator.EventType;
 
 import java.time.LocalDateTime;
 
@@ -32,13 +31,16 @@ public class Student {
     private String address;
 
     @Column(name = "director")
+//    @ColumnDefault("staff id")
+//    @Generated
     private String director; // 班主任
 
     @Column(name = "CREATE_TIME", columnDefinition = "timestamp default current_timestamp")
-    @Generated
+//    @Generated
     private LocalDateTime createTime;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "UPDATE_TIME", columnDefinition = "timestamp default current_timestamp", updatable = true)
+//    @Generated
     private LocalDateTime updateTime;
 }

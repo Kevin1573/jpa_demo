@@ -1,5 +1,8 @@
 package com.xboot.jpa.demo.controller.index;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaCheckRole;
 import com.xboot.jpa.demo.common.resp.Result;
 import com.xboot.jpa.demo.dal.dataobject.Student;
 import com.xboot.jpa.demo.service.StudentService;
@@ -24,6 +27,8 @@ import java.util.List;
 public class IndexController {
     private final StudentService studentService;
 
+    // 注解式鉴权：当前会话必须登录才能通过
+    @SaCheckLogin
     @GetMapping("/hello")
     public Result hello() {
         log.info("[CTRL] send say hi request");
@@ -31,6 +36,8 @@ public class IndexController {
         return Result.ok().data("students", students);
     }
 
+    // 注解式鉴权：当前会话必须具有指定角色标识才能通过
+    @SaCheckRole("super-admin")
     @GetMapping("/create")
     public Result create() {
         log.info("[CTRL] create request");
@@ -58,6 +65,8 @@ public class IndexController {
         return Result.ok().data("student", resultCondition);
     }
 
+    // 注解式鉴权：当前会话必须具有指定权限才能通过
+    @SaCheckPermission("user-add")
     @GetMapping("/update/{id}")
     public Result update(@PathParam("id") Long id) {
         studentService.updateById(id);

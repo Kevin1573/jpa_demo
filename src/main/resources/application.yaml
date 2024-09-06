@@ -25,7 +25,13 @@ spring:
       # mode: always
       data-locations:
         - classpath:schema-BACK.sql
-
+  sa-token:
+    token-name: satoken
+    timeout: 259200
+    activity-timeout: -1
+    allow-concurrent-login: false
+    is-share: false
+    token-style: uuid
 
 logging:
   pattern:

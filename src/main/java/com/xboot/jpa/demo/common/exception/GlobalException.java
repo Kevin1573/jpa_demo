@@ -6,6 +6,7 @@ import cn.dev33.satoken.exception.NotRoleException;
 import com.xboot.jpa.demo.common.resp.AjaxJson;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +17,7 @@ import java.io.IOException;
 /**
  * 全局异常处理
  */
+@Slf4j
 @ControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
 public class GlobalException {
 
@@ -33,8 +35,7 @@ public class GlobalException {
             throws Exception {
 
         // 打印堆栈，以供调试
-        System.out.println("全局异常---------------");
-        e.printStackTrace();
+        log.error("全局异常---------------"+request.getRequestURL(), e);
 
         // 不同异常返回不同状态码
         AjaxJson aj = null;

@@ -1,5 +1,6 @@
 package com.xboot.jpa.demo.service;
 
+import com.xboot.jpa.demo.controller.req.StudentReq;
 import com.xboot.jpa.demo.dal.dataobject.Student;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
  * @author xboot
  **/
 public interface StudentService {
-    List<Student> getStudents();
+    List<Student> getStudents(StudentReq studentReq);
 
     Student createStu(Student student);
 

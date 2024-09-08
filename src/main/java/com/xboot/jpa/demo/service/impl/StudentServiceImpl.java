@@ -1,9 +1,12 @@
 package com.xboot.jpa.demo.service.impl;
 
+import com.xboot.jpa.demo.controller.req.StudentReq;
 import com.xboot.jpa.demo.dal.dataobject.Student;
 import com.xboot.jpa.demo.dal.h2.StudentRepository;
 import com.xboot.jpa.demo.service.StudentService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -21,9 +24,18 @@ import java.util.List;
 @AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
+
     @Override
-    public List<Student> getStudents() {
-        Page<Student> studentPage = studentRepository.findAll(PageRequest.of(0, 10));
+    public List<Student> getStudents(StudentReq studentReq) {
+        Page<Student> studentPage;
+        if (studentReq == null || studentReq.getName() == null && studentReq.getState() == null) {
+            studentPage = studentRepository.findAll(PageRequest.of(0, 10));
+        } else {
+            Student student = new Student();
+            BeanUtils.copyProperties(studentReq, student);
+            studentPage = studentRepository.findAll(Example.of(student), PageRequest.of(0, 10));
+        }
+
         return studentPage.getContent();
     }
 

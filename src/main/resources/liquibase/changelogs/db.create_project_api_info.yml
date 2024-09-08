@@ -1,0 +1,64 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202409082200
+      author: jpa-demo
+      runOnChange: true
+      dropTable:
+          tableName: project_api_info
+      changes:
+        - createTable:
+            tableName: project_api_info
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+              - column:
+                  name: project_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: api_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: api_url
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: api_desc
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: api_method
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: api_param
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: api_return
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: api_return_desc
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: api_remark
+                  type: varchar(255)
+                  constraints:
+                    nullable: true

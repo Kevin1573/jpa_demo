@@ -1,5 +1,6 @@
 package com.xboot.jpa.demo;
 
+import com.xboot.jpa.demo.controller.req.StudentReq;
 import com.xboot.jpa.demo.dal.dataobject.Book;
 import com.xboot.jpa.demo.dal.dataobject.City;
 import com.xboot.jpa.demo.dal.dataobject.Student;
@@ -9,6 +10,7 @@ import com.xboot.jpa.demo.dal.h2.StudentRepository;
 import com.xboot.jpa.demo.service.CityService;
 import com.xboot.jpa.demo.service.StudentService;
 import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,8 +25,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 @SpringBootTest(classes = JpaDemoApplication.class,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@AutoConfigureTestDatabase  // 启动一个内存数据库，不使用真实数据库
-public class JpaDemoApplicationTests {
+class JpaDemoApplicationTests {
 
     @Autowired
     StudentService studentService;
@@ -55,7 +56,11 @@ public class JpaDemoApplicationTests {
 
     @Test
     void contextLoads() {
-        studentService.getStudents().forEach(System.out::println);
+        StudentReq studentReq = new StudentReq();
+        studentReq.setName("student");
+        studentReq.setState("normal");
+        studentService.getStudents(studentReq).forEach(System.out::println);
+        Assertions.assertNotNull(studentReq);
     }
 
 
@@ -75,10 +80,12 @@ public class JpaDemoApplicationTests {
 
         Student student = studentRepository.findById(stu1.getId()).get();
         System.out.println(student);
+
+        Assertions.assertNotNull(student);
     }
 
     @Test
-    public void testCityRepo() {
+    void testCityRepo() {
         City city = new City("xian", "ok");
         City saved = cityRepository.save(city);
         Assert.isTrue(saved != null, "insert data failed");
@@ -92,28 +99,31 @@ public class JpaDemoApplicationTests {
 
         Page<City> cityPage = cityRepository.findAll(PageRequest.of(0, 10));
         cityPage.getContent().forEach(System.out::println);
+
+        Assertions.assertEquals(1, cityPage.getTotalElements());
     }
 
 
     @Test
-    public void testBookRepo() {
+    void testBookRepo() {
         bookRepository.findById(1L).ifPresentOrElse(System.out::println, () -> {
             System.out.println("book not found");
         });
 
         long count = bookRepository.count();
         System.out.println("count = " + count);
+        Assertions.assertEquals(254, count);
     }
 
-    private static String strBig = "liquibase 数据库版本留痕解决方案，在实际生产过程中如何高效管理数据库的DDL与DML语句，对这些语句留痕处理。如果能将sql的执行与SpringBoot项目启动结合在一起，每次启动项目自动执行新增的sql语句，这样就可以使得项目组成员各个都保持相同的开发库，避免人为操作导致数据库不符合预期。\n" +
-            "————————————————\n" +
-            "\n" +
-            "                            版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。\n" +
-            "                        \n" +
-            "原文链接：https://blog.csdn.net/zy_zhangruichen/article/details/128730606";
+    private static String strBig = """
+            liquibase 数据库版本留痕解决方案，在实际生产过程中如何高效管理数据库的DDL与DML语句，对这些语句留痕处理。如果能将sql的执行与SpringBoot项目启动结合在一起，每次启动项目自动执行新增的sql语句，这样就可以使得项目组成员各个都保持相同的开发库，避免人为操作导致数据库不符合预期。
+            ————————————————
+                        
+                                        版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。
+            原文链接：https://blog.csdn.net/zy_zhangruichen/article/details/128730606""";
 
     @Test
-    public void testRollbackBookRepo() {
+    void testRollbackBookRepo() {
 
         List<Book> books = Lists.newArrayList();
         for (int i = 100; i < 254; i++) {
@@ -123,12 +133,10 @@ public class JpaDemoApplicationTests {
             book.setPrice(10.0);
 
             String content1 = Utils.getByteStrSub(new String[]{strBig}, 0, i);
-            //book.setContent(i % 10 == 0 ? content1 : strBig);
             book.setContent(content1);
             bookRepository.save(book);
             books.add(book);
         }
-        // bookRepository.saveAll(books);
 
         List<Book> contentMaxLength = bookRepository.findContentMaxLength();
         System.out.println("book max length = " + contentMaxLength.get(contentMaxLength.size() - 1));
@@ -136,7 +144,7 @@ public class JpaDemoApplicationTests {
 
     // 写一个测试用例，计算jdk17版本中中英文的字节数，并验证结果是否正确。
     @Test
-    public void testJdk17StrLength() {
+    void testJdk17StrLength() {
         String str = "你好，世界！";
         System.out.println("str.getBytes().length = " + str.getBytes().length);
         System.out.println("str.getBytes(StandardCharsets.UTF_8).length = " + str.getBytes(UTF_8).length);
@@ -148,10 +156,11 @@ public class JpaDemoApplicationTests {
         String str2 = "你好,World!";
         System.out.println("str2.length = " + str2.getBytes().length);
         System.out.println("str2.getBytes(StandardCharsets.UTF_8).length = " + str2.getBytes(UTF_8).length);
+        Assertions.assertEquals(13, str.getBytes(UTF_8).length);
     }
 
     @Test
-    public void testSubStringWithMaxLength() {
+    void testSubStringWithMaxLength() {
         for (int i = 400; i < 600; i++) {
             String text2 = Utils.getByteStrSub(new String[]{strBig}, 0, i);
             try {

@@ -60,8 +60,8 @@ public class IndexController {
     }
 
     @GetMapping("/getConditional")
-    public Result getResultForConditional() {
-        Student resultCondition = studentService.getResultCondition();
+    public Result getResultForConditional(String name, String state) {
+        Student resultCondition = studentService.getResultCondition(name, state);
         return Result.ok().data("student", resultCondition);
     }
 

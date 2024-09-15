@@ -15,7 +15,7 @@ public interface StudentService {
 
     Student createStu(Student student);
 
-    Student getResultCondition();
+    Student getResultCondition(String name, String state);
 
     void updateById(Long id);
 }

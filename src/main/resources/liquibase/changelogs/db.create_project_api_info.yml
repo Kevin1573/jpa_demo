@@ -2,11 +2,12 @@ databaseChangeLog:
   - changeSet:
       id: 202409082200
       author: jpa-demo
-      runOnChange: true
-      dropTable:
-          tableName: project_api_info
+      runOnChange: false
+#      dropTable:
+#          tableName: project_api_info
       changes:
         - createTable:
+            exists: false
             tableName: project_api_info
             columns:
               - column:

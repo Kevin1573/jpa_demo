@@ -46,8 +46,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getResultCondition() {
-        return studentRepository.findByNameAndStateAllIgnoringCase("student", "normal");
+    public Student getResultCondition(String name, String state) {
+        return studentRepository.findByNameAndStateAllIgnoringCase(name, state);
     }
 
     @Transactional(rollbackFor = Exception.class)

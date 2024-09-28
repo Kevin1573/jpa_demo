@@ -45,7 +45,7 @@ public class SaSecurityConfig implements WebMvcConfigurer {
         // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
         registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
                 .addPathPatterns("/**")
-                .excludePathPatterns("/auth/login", "/health", "/favicon.ico");
+                .excludePathPatterns("/auth/login", "/health", "/*.ico","/job/*","/recover/*");
     }
 
     /**

@@ -19,6 +19,7 @@ public class BatchLogError {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String jobName;
     private String message;
     // 定义stackTrace字段类型为text
     @Lob

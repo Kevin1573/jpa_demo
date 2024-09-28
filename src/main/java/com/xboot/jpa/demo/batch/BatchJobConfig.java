@@ -78,7 +78,7 @@ public class BatchJobConfig {
                 .processor(sampleProcessor())
                 .writer(sampleWriter())
                 .faultTolerant()
-                .skip(BindException.class)
+//                .skip(BindException.class)
                 .skip(FlatFileParseException.class)
                 .skipLimit(100)
                 .listener(csvSkipListener)
@@ -94,11 +94,19 @@ public class BatchJobConfig {
     }
 
     @Bean
-    public Job importUserJob(Step step0, Step step1) {
+    public Step recoverTaskletStep() {
+        return new StepBuilder("recoverTaskletStep", jobRepository)
+                .tasklet(new CsvItemRecoverTasklet(), transactionManager)
+                .build();
+    }
+
+    @Bean
+    public Job importUserJob(Step step0, Step step1, Step recoverTaskletStep) {
         return new JobBuilder("importUserJob", jobRepository)
-                .incrementer(new RunIdIncrementer())
+                //.incrementer(new RunIdIncrementer())
                 .start(step0)
                 .next(step1)
+                .next(recoverTaskletStep)
                 .build();
     }
 

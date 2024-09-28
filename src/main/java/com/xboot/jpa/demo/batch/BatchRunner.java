@@ -3,6 +3,7 @@ package com.xboot.jpa.demo.batch;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -10,11 +11,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class BatchRunner implements CommandLineRunner {
 
-    @Autowired
-    private JobLauncher jobLauncher;
+    private final JobLauncher jobLauncher;
+
+    private final Job job;
 
     @Autowired
-    private Job job;
+    public BatchRunner(JobLauncher jobLauncher, @Qualifier("importUserJob") Job job) {
+        this.jobLauncher = jobLauncher;
+        this.job = job;
+    }
+
 
     @Override
     public void run(String... args) throws Exception {

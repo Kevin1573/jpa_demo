@@ -3,11 +3,16 @@ package com.xboot.jpa.demo.batch;
 import com.xboot.jpa.demo.dal.dataobject.BatchLogError;
 import com.xboot.jpa.demo.dal.dataobject.CsvItem;
 import com.xboot.jpa.demo.dal.h2.BatchLogErrorRepository;
+import com.xboot.jpa.demo.util.GsonUtils;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.batch.core.SkipListener;
+import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 注释
@@ -19,9 +24,17 @@ import org.springframework.stereotype.Component;
 public class CsvItemSkipListener implements SkipListener<CsvItem, CsvItem> {
     @Resource
     BatchLogErrorRepository batchLogErrorRepository;
+
     @Override
     public void onSkipInRead(Throwable t) {
         log.error("onSkipInRead {}", t.getMessage());
-        batchLogErrorRepository.save(new BatchLogError(null, t.getMessage(),   ExceptionUtils.getStackTrace(t)));
+        Map<String, Object> errorMessage = new HashMap<>();
+        errorMessage.put("@clazz", t.getClass().getName());
+        if (t instanceof FlatFileParseException flatfileparseexception) {
+            errorMessage.put("lineNumber", flatfileparseexception.getLineNumber());
+            errorMessage.put("input", flatfileparseexception.getInput());
+        }
+        batchLogErrorRepository.save(new BatchLogError(null, "importUserJob",
+                GsonUtils.toJson(errorMessage), ExceptionUtils.getStackTrace(t)));
     }
 }

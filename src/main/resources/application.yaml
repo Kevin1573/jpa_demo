@@ -2,7 +2,7 @@ spring:
   application:
     name: jpa-demo
   profiles:
-    active: pg-spy
+    active: dev
   output:
     ansi:
       enabled: always

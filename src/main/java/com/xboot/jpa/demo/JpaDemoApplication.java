@@ -9,9 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JpaDemoApplication {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JpaDemoApplication.class);
-	public static void main(String[] args) {
+
+    public static void main(String[] args) {
 		SpringApplication.run(JpaDemoApplication.class, args);
 		LOGGER.info("启动成功：sa-token配置如下：({})", SaManager.getConfig());
 	}
+
 
 }

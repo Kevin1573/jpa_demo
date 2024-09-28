@@ -68,19 +68,21 @@ public class BatchJobConfig {
 
     @Resource
     CsvItemSkipListener csvSkipListener;
+
+
     @Bean
     public Step step1() {
         return new StepBuilder("step1", jobRepository)
                 .<CsvItem, CsvItem>chunk(10, transactionManager)
                 .reader(sampleReader())
-                .listener(csvSkipListener)
                 .processor(sampleProcessor())
                 .writer(sampleWriter())
                 .faultTolerant()
                 .skip(BindException.class)
                 .skip(FlatFileParseException.class)
                 .skipLimit(100)
-                .listener(new CustomStepExecutionListener())
+                .listener(csvSkipListener)
+//                .listener(new CustomStepExecutionListener())
                 .build();
     }
 

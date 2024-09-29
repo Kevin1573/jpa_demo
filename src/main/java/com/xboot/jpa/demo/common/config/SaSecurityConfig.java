@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -45,7 +44,13 @@ public class SaSecurityConfig implements WebMvcConfigurer {
         // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
         registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
                 .addPathPatterns("/**")
-                .excludePathPatterns("/auth/login", "/health", "/*.ico","/job/*","/recover/*");
+                .excludePathPatterns("/auth/login",
+                        "/health",
+                        "/*.ico",
+                        "/job/*",
+                        "/recover/*",
+                        "/random/*",
+                        "/retry/*");
     }
 
     /**

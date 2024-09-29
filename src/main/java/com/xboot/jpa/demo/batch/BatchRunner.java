@@ -16,7 +16,8 @@ public class BatchRunner implements CommandLineRunner {
     private final Job job;
 
     @Autowired
-    public BatchRunner(JobLauncher jobLauncher, @Qualifier("importUserJob") Job job) {
+    public BatchRunner(JobLauncher jobLauncher,
+                       @Qualifier("compositeJob") Job job) {
         this.jobLauncher = jobLauncher;
         this.job = job;
     }

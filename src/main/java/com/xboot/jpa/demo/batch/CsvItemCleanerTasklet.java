@@ -2,7 +2,9 @@ package com.xboot.jpa.demo.batch;
 
 import com.xboot.jpa.demo.dal.h2.BatchLogErrorRepository;
 import com.xboot.jpa.demo.dal.h2.CsvItemRepository;
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.Resource;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepContribution;
@@ -20,11 +22,11 @@ public class CsvItemCleanerTasklet implements Tasklet {
     @Resource
     BatchLogErrorRepository batchLogErrorRepository;
     @Override
-    public RepeatStatus execute(StepContribution contribution,
-                                ChunkContext chunkContext) throws Exception {
+    public RepeatStatus execute(@NonNull StepContribution contribution,
+                                @NonNull ChunkContext chunkContext) throws Exception {
         csvItemRepository.deleteAll();
         batchLogErrorRepository.deleteAll();
-        log.error("cleaned all data");
+        log.error("cleaned all data {} {}", contribution, chunkContext);
         // 返回 FINISHED 状态
         return RepeatStatus.FINISHED;
     }

@@ -10,6 +10,7 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -36,10 +37,9 @@ public class RecoverController {
     }
 
     @RequestMapping("batchJob")
-    public Result runImportJob() throws Exception {
+    public Result runImportJob(@RequestParam String jobSeq) throws Exception {
         JobParameters params = new JobParametersBuilder()
-                //.addLong("time", System.currentTimeMillis())
-                .addString("sub", System.currentTimeMillis() + "")
+                .addString("jobSeq", jobSeq)
                 .toJobParameters();
 
         JobExecution jobExecution = jobLauncher.run(recoverJob, params);

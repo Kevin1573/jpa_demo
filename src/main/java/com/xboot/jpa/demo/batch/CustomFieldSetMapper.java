@@ -4,6 +4,7 @@ import com.xboot.jpa.demo.dal.dataobject.CsvItem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.FieldSet;
+import org.springframework.lang.NonNull;
 import org.springframework.validation.BindException;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -13,6 +14,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class CustomFieldSetMapper implements FieldSetMapper<CsvItem> {
     private final AtomicLong lineNumber = new AtomicLong(0);
 
+    @NonNull
     @Override
     public CsvItem mapFieldSet(FieldSet fieldSet) throws BindException {
         long number = lineNumber.incrementAndGet();
@@ -24,6 +26,6 @@ public class CustomFieldSetMapper implements FieldSetMapper<CsvItem> {
             throw new BindException(field2, "Invalid field2 at line " + number);
         }
 
-        return new CsvItem(null, fieldSet.readString("field1"), field2);
+        return new CsvItem(fieldSet.readString("field1"), field2);
     }
 }

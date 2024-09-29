@@ -1,6 +1,6 @@
 package com.xboot.jpa.demo.batch;
 
-import com.xboot.jpa.demo.dal.dataobject.BatchLogError;
+import com.xboot.jpa.demo.dal.dataobject.BatchErrorLog;
 import com.xboot.jpa.demo.dal.dataobject.CsvItem;
 import com.xboot.jpa.demo.dal.h2.BatchLogErrorRepository;
 import com.xboot.jpa.demo.util.GsonUtils;
@@ -34,7 +34,7 @@ public class CsvItemSkipListener implements SkipListener<CsvItem, CsvItem> {
             errorMessage.put("lineNumber", flatfileparseexception.getLineNumber());
             errorMessage.put("input", flatfileparseexception.getInput());
         }
-        batchLogErrorRepository.save(new BatchLogError(null, "importUserJob",
-                GsonUtils.toJson(errorMessage), ExceptionUtils.getStackTrace(t)));
+        batchLogErrorRepository.save(new BatchErrorLog(null, "importUserJob",
+                GsonUtils.toJson(errorMessage), ExceptionUtils.getStackTrace(t),false));
     }
 }

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "batch_log_error")
 @NoArgsConstructor
 @AllArgsConstructor
-public class BatchLogError {
+public class BatchErrorLog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -24,4 +24,7 @@ public class BatchLogError {
     // 定义stackTrace字段类型为text
     @Lob
     private String stackTrace;
+    // 是否已被处理，默认值为false
+    @Column(name = "is_handled", nullable = false)
+    private Boolean isHandled;
 }

@@ -1,5 +1,6 @@
 package com.xboot.jpa.demo.util;
 
+import com.google.common.base.Splitter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -30,5 +31,11 @@ public class GsonUtils {
         Type type = new TypeToken<Map<String, Object>>(){}.getType();
         // 将JSON字符串转换为Map
         return gson.fromJson(jsonStr, type);
+    }
+
+    private String getPara(String url, String name) {
+        String params = url.substring(url.indexOf("?") + 1);
+        Map<String, String> split = Splitter.on("&").withKeyValueSeparator("=").split(params);
+        return split.get(name);
     }
 }

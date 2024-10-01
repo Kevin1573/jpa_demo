@@ -19,12 +19,12 @@ import java.io.IOException;
  */
 @Slf4j
 @ControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
-public class GlobalException {
+public class GlobalErrorAdvice {
 
     // 在当前类每个方法进入之前触发的操作
     @ModelAttribute
     public void get(HttpServletRequest request) throws IOException {
-
+        log.warn("在当前类每个方法进入之前触发的操作");
     }
 
 
@@ -35,18 +35,15 @@ public class GlobalException {
             throws Exception {
 
         // 打印堆栈，以供调试
-        log.error("全局异常---------------"+request.getRequestURL(), e);
+        log.error("全局异常---------------{}\n {}", request.getRequestURL(), e.getMessage());
 
         // 不同异常返回不同状态码
         AjaxJson aj = null;
-        if (e instanceof NotLoginException) {    // 如果是未登录异常
-            NotLoginException ee = (NotLoginException) e;
+        if (e instanceof NotLoginException ee) {    // 如果是未登录异常
             aj = AjaxJson.getNotLogin().setMsg(ee.getMessage());
-        } else if (e instanceof NotRoleException) {        // 如果是角色异常
-            NotRoleException ee = (NotRoleException) e;
+        } else if (e instanceof NotRoleException ee) {        // 如果是角色异常
             aj = AjaxJson.getNotJur("无此角色：" + ee.getRole());
-        } else if (e instanceof NotPermissionException) {    // 如果是权限异常
-            NotPermissionException ee = (NotPermissionException) e;
+        } else if (e instanceof NotPermissionException ee) {    // 如果是权限异常
             aj = AjaxJson.getNotJur("无此权限：" + ee.getCode());
         } else {    // 普通异常, 输出：500 + 异常信息
             aj = AjaxJson.getError(e.getMessage());

@@ -17,5 +17,4 @@ public class JpaDemoApplication {
         LOGGER.info("启动成功：sa-token配置如下：({})", SaManager.getConfig());
     }
 
-
 }

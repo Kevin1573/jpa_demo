@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
             throws Exception {
 
         // 打印堆栈，以供调试
-        log.error("全局异常---------------{}\n {}", request.getRequestURL(), e.getMessage());
+        log.error("全局异常-------------{}--{}\n {}",request.getMethod(), request.getRequestURL(), e.getMessage());
 
         // 不同异常返回不同状态码
         AjaxJson aj = null;

@@ -1,6 +1,5 @@
 package com.xboot.jpa.demo.service;
 
-import com.xboot.jpa.demo.dal.entity.Goods;
 import com.xboot.jpa.demo.dto.GoodsDTO;
 import com.xboot.jpa.demo.dto.request.CreateGoodsRequest;
 import com.xboot.jpa.demo.dto.request.UpdateGoodsRequest;
@@ -11,7 +10,7 @@ public interface GoodsService {
     /**
      * 创建商品
      */
-    GoodsDTO createGoods(CreateGoodsRequest request);
+    GoodsDTO createGoods(CreateGoodsRequest request, Object loginId);
 
     /**
      * 获取商品列表

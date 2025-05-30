@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 @Service
@@ -25,8 +26,9 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     @Transactional
-    public GoodsDTO createGoods(CreateGoodsRequest request) {
+    public GoodsDTO createGoods(CreateGoodsRequest request, Object loginId) {
         Goods goods = modelMapper.map(request, Goods.class);
+        goods.setCreatedBy((Serializable) loginId);
         Goods savedGoods = goodsRepository.save(goods);
         return modelMapper.map(savedGoods, GoodsDTO.class);
     }

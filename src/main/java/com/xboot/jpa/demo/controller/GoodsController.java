@@ -1,5 +1,9 @@
 package com.xboot.jpa.demo.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
+import com.xboot.jpa.demo.common.PageUtils;
+import com.xboot.jpa.demo.common.SimplePage;
+import com.xboot.jpa.demo.common.resp.ApiResult;
 import com.xboot.jpa.demo.dto.GoodsDTO;
 import com.xboot.jpa.demo.dto.request.CreateGoodsRequest;
 import com.xboot.jpa.demo.dto.request.UpdateGoodsRequest;
@@ -28,7 +32,8 @@ public class GoodsController {
     @PostMapping
     @Operation(summary = "创建商品", description = "创建一个新的商品")
     public ResponseEntity<GoodsDTO> createGoods(@Valid @RequestBody CreateGoodsRequest request) {
-        GoodsDTO goods = goodsService.createGoods(request);
+        Object loginId = StpUtil.getTokenInfo().getLoginId();
+        GoodsDTO goods = goodsService.createGoods(request, loginId);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(goods.getId())
@@ -38,10 +43,10 @@ public class GoodsController {
 
     @GetMapping
     @Operation(summary = "获取商品列表", description = "获取分页的商品列表，支持排序")
-    public ResponseEntity<Page<GoodsDTO>> listGoods(
-            @PageableDefault(size = 10, sort = "createTime,desc") Pageable pageable) {
+    public ApiResult<SimplePage<GoodsDTO>> listGoods(
+            @PageableDefault() Pageable pageable) {
         Page<GoodsDTO> goodsPage = goodsService.listGoods(pageable);
-        return ResponseEntity.ok(goodsPage);
+        return ApiResult.ok(PageUtils.toSimplePage(goodsPage));
     }
 
     @GetMapping("/{id}")

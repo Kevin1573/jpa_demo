@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -63,4 +64,14 @@ public class Goods {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updateTime;
+
+    /**
+     * 创建人
+     */
+    @Column(nullable = false, updatable = false)
+    private Serializable createBy;
+
+    public void setCreatedBy(Serializable loginId) {
+        this.createBy = loginId;
+    }
 }

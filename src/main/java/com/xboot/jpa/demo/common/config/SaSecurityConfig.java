@@ -28,6 +28,7 @@ public class SaSecurityConfig implements WebMvcConfigurer {
             "/**/static/**",
             "/**/druid/**",
             "/**/swagger-ui.html",
+            "/**/swagger-ui/index.html",
             "/**/webjars/**",
             "/**/v2/**",
             "/**/swagger-resources/**",
@@ -44,13 +45,27 @@ public class SaSecurityConfig implements WebMvcConfigurer {
         // 注册 Sa-Token 拦截器，校验规则为 StpUtil.checkLogin() 登录校验。
         registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin()))
                 .addPathPatterns("/**")
-                .excludePathPatterns("/auth/login",
-                        "/health",
+                .excludePathPatterns(
+                        "/**/health",
                         "/*.ico",
-                        "/job/*",
-                        "/recover/*",
+                        "/**/job/**",
+                        "/**/auth/login",
+                        "/**/auth/getToken",
                         "/random/*",
-                        "/retry/*");
+                        "/retry/*",
+                        "/**/login",
+                        "/**/logout",
+                        "/**/error",
+                        "/**/static/**",
+                        "/**/druid/**",
+                        "/**/v3/api-docs/**",
+                        "/**/swagger-ui.html",
+                        "/**/swagger-ui/index.html",
+                        "/**/swagger-ui/**",
+                        "/**/webjars/**",
+                        "/**/v2/**",
+                        "/**/swagger-resources/**",
+                        "/favicon.ico");
     }
 
     /**

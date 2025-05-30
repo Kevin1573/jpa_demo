@@ -2,6 +2,7 @@ package com.xboot.jpa.demo.controller;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
+import com.xboot.jpa.demo.common.resp.ApiResult;
 import com.xboot.jpa.demo.common.resp.Result;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,5 +32,11 @@ public class LoginController {
         result.put("isLogin", StpUtil.isLogin());
         result.put("roles", StpUtil.getRoleList());
         return Result.ok().data(result);
+    }
+
+    @RequestMapping("/getToken")
+    public ApiResult<String> getToken() {
+        String tokenValue = StpUtil.getTokenValueByLoginId(10000);
+        return ApiResult.ok(tokenValue);
     }
 }

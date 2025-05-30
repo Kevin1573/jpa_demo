@@ -74,8 +74,9 @@
 		<dependency>
 			<groupId>cn.dev33</groupId>
 			<artifactId>sa-token-spring-boot3-starter</artifactId>
-			<version>1.37.0</version>
+			<version>1.38.0</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -156,6 +157,20 @@
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 			<version>4.8.2</version>
+		</dependency>
+		
+		<!-- SpringDoc OpenAPI -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
+		<!-- ModelMapper -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.2.0</version>
 		</dependency>
 
 	</dependencies>

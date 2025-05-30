@@ -1,45 +1,68 @@
 package com.xboot.jpa.demo.controller;
 
-import com.xboot.jpa.demo.common.resp.ApiResult;
-import com.xboot.jpa.demo.controller.req.GoodsRequest;
+import com.xboot.jpa.demo.dto.GoodsDTO;
+import com.xboot.jpa.demo.dto.request.CreateGoodsRequest;
+import com.xboot.jpa.demo.dto.request.UpdateGoodsRequest;
+import com.xboot.jpa.demo.service.GoodsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
+@RequestMapping("/api/goods")
+@RequiredArgsConstructor
+@Tag(name = "商品管理", description = "商品相关操作接口")
 public class GoodsController {
 
-    // 新建商品
-    @PostMapping("/goods/create")
-    public ApiResult<String> createGoods(@RequestBody GoodsRequest.GoodsCreateReq goodsCreateReq) {
-        // 获取当前用户, 更新请求参数(createUser)
-        // Long userId = AppContextHolder.getCurrentUserId();
-        goodsCreateReq.setCreateUser(1L);
+    private final GoodsService goodsService;
 
-        /// TODO 后期添加检查有没有创建商品的权限 以及根据店铺的经营范围, 将商品归类(便于后期的商品推荐)
-        return ApiResult.ok("success");
+    @PostMapping
+    @Operation(summary = "创建商品", description = "创建一个新的商品")
+    public ResponseEntity<GoodsDTO> createGoods(@Valid @RequestBody CreateGoodsRequest request) {
+        GoodsDTO goods = goodsService.createGoods(request);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(goods.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(goods);
     }
 
-    @GetMapping("/goods/list")
-    public ApiResult<String> listGoods(@RequestBody GoodsRequest.GoodsSearchReq goodsSearchReq) {
-        // 根据当前用户查询商品(区分超级管理员/管理员/商户)
-        // Long userId = AppContextHolder.getCurrentUserId();
-        // Boolean superAdmin = AppContextHolder.isSuperAdmin();
-        return ApiResult.ok("success");
+    @GetMapping
+    @Operation(summary = "获取商品列表", description = "获取分页的商品列表，支持排序")
+    public ResponseEntity<Page<GoodsDTO>> listGoods(
+            @PageableDefault(size = 10, sort = "createTime,desc") Pageable pageable) {
+        Page<GoodsDTO> goodsPage = goodsService.listGoods(pageable);
+        return ResponseEntity.ok(goodsPage);
     }
 
-    @GetMapping("/goods/detail")
-    public ApiResult<String> detailGoods(@RequestParam Long id) {
-        // 根据当前用户查询商品(区分超级管理员/管理员/商户)
-        // Long userId = AppContextHolder.getCurrentUserId();
-        // Boolean superAdmin = AppContextHolder.isSuperAdmin();
-        return ApiResult.ok("success");
+    @GetMapping("/{id}")
+    @Operation(summary = "获取商品详情", description = "根据ID获取单个商品的详细信息")
+    public ResponseEntity<GoodsDTO> detailGoods(@PathVariable Long id) {
+        GoodsDTO goods = goodsService.detailGoods(id);
+        return ResponseEntity.ok(goods);
     }
 
-    @PostMapping("/goods/update")
-    public ApiResult<String> updateGoods(@RequestBody GoodsRequest.GoodsUpdateReq goodsUpdateReq) {
-        // 获取当前用户, 获取商品创建人, 获取商品更新人
-        // Long userId = AppContextHolder.getCurrentUserId();
-        goodsUpdateReq.setCreateUser(1L);
-        goodsUpdateReq.setUpdateUser(1L);
-        return ApiResult.ok("success");
+    @PutMapping("/{id}")
+    @Operation(summary = "更新商品", description = "根据ID更新商品信息")
+    public ResponseEntity<GoodsDTO> updateGoods(
+            @PathVariable Long id, @Valid @RequestBody UpdateGoodsRequest request) {
+        GoodsDTO goods = goodsService.updateGoods(id, request);
+        return ResponseEntity.ok(goods);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "删除商品", description = "根据ID删除商品")
+    public ResponseEntity<Void> deleteGoods(@PathVariable Long id) {
+        goodsService.deleteGoods(id);
+        return ResponseEntity.noContent().build();
     }
 }

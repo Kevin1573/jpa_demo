@@ -7,19 +7,23 @@ import com.xboot.jpa.demo.common.resp.AjaxJson;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 全局异常处理
  */
 @Slf4j
 @ControllerAdvice // 可指定包前缀，比如：(basePackages = "com.pj.admin")
-public class GlobalErrorAdvice {
+public class GlobalExceptionHandler {
 
     // 在当前类每个方法进入之前触发的操作
     @ModelAttribute
@@ -27,6 +31,14 @@ public class GlobalErrorAdvice {
         log.warn("在当前类每个方法进入之前触发的操作");
     }
 
+    @ExceptionHandler(NotLoginException.class)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> handleNotLoginException(NotLoginException e) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("code", e.getCode());
+        resultMap.put("message", e.getMessage());
+        return new ResponseEntity<>(resultMap, HttpStatus.UNAUTHORIZED);
+    }
 
     // 全局异常拦截（拦截项目中的所有异常）
     @ResponseBody

@@ -7,7 +7,7 @@ spring:
       platform: h2
       tablePrefix: BATCH_
   datasource:
-    #url: jdbc:h2:tcp://localhost//D:/h2/test;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+#    url: jdbc:h2:tcp://localhost//D:/h2/test;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
     url: jdbc:h2:file:D:/h2/dev;DB_CLOSE_DELAY=-1;AUTO_RECONNECT=TRUE;MODE=PostgreSQL
     username: sa
     password:

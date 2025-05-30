@@ -30,7 +30,6 @@ public class RecoverController {
 
     private final Job recoverJob;
 
-    @Autowired
     public RecoverController(JobLauncher jobLauncher, @Qualifier("recoverJob") Job recoverJob) {
         this.jobLauncher = jobLauncher;
         this.recoverJob = recoverJob;

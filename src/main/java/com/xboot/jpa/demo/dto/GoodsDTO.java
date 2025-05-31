@@ -48,4 +48,9 @@ public class GoodsDTO {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+    /**
+     * 创建人
+     */
+    private String createBy;
 }

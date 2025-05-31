@@ -31,6 +31,11 @@ spring:
 server:
   # 端口
   port: 8081
+  # 开启gzip 压缩
+  compression:
+    enabled: true
+    min-response-size: 512B
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:

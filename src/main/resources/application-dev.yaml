@@ -4,21 +4,33 @@ spring:
       enabled: false
     jdbc:
       initialize-schema: ALWAYS
-      platform: h2
+      platform: postgresql
       tablePrefix: BATCH_
   datasource:
-#    url: jdbc:h2:tcp://localhost//D:/h2/test;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
-    url: jdbc:h2:file:D:/h2/dev;DB_CLOSE_DELAY=-1;AUTO_RECONNECT=TRUE;MODE=PostgreSQL
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/zero?binaryTransfer=false&forceBinary=false&reWriteBatchedInserts=true
+    username: zero
+    password: kevin1234
+    driver-class-name: org.postgresql.Driver
+  #    url: jdbc:h2:tcp://localhost//D:/h2/test;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE;AUTO_RECONNECT=TRUE;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+#    url: jdbc:h2:file:D:/h2/dev;DB_CLOSE_DELAY=-1;AUTO_RECONNECT=TRUE;MODE=PostgreSQL
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
   jpa:
-    show-sql: true
     hibernate:
       ddl-auto: update
     properties:
-      hibernate.dialect: org.hibernate.dialect.H2Dialect
-    open-in-view: false
+#      hibernate.dialect: org.hibernate.dialect.H2Dialect
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        use_jdbc_metadata_defaults: false
+        jdbc:
+          batch_size: 1000
+          batch_versioned_data: true
+          use_get_generated_keys: true
   sql:
     init:
       mode: NEVER
@@ -26,12 +38,13 @@ spring:
         - classpath:data.sql
   h2:
     console:
-      enabled: true
+      enabled: false
       path: /h2
       settings:
         web-allow-others: false
         trace: false
   liquibase:
-    enabled: true
-    change-log: classpath:liquibase/master.xml
+    enabled: false
+#    change-log: classpath:liquibase/master.xml
     contexts: test
+    change-log: classpath*:db/changelog/db.changelog-master.xml

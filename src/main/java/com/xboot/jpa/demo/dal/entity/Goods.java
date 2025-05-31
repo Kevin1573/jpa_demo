@@ -69,9 +69,6 @@ public class Goods {
      * 创建人
      */
     @Column(nullable = false, updatable = false)
-    private Serializable createBy;
+    private String createBy;
 
-    public void setCreatedBy(Serializable loginId) {
-        this.createBy = loginId;
-    }
 }

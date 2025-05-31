@@ -22,7 +22,7 @@ public class BatchErrorLog {
     private String jobName;
     private String message;
     // 定义stackTrace字段类型为text
-    @Lob
+    @Column(name = "stack_trace", columnDefinition = "text")
     private String stackTrace;
     // 是否已被处理，默认值为false
     @Column(name = "is_handled", nullable = false)

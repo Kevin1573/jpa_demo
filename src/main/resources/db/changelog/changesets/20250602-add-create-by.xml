@@ -1,0 +1,12 @@
+<changeSet id="add-create-by-1" author="dev">
+    <addColumn tableName="sp_goods">
+        <column name="create_by" type="varchar(255)" defaultValueComputed="root">
+            <constraints nullable="false"/>
+        </column>
+    </addColumn>
+
+    <!-- 回滚脚本 -->
+    <rollback>
+        <dropColumn tableName="sp_goods" columnName="create_by"/>
+    </rollback>
+</changeSet>

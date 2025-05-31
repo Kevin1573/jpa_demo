@@ -28,7 +28,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Transactional
     public GoodsDTO createGoods(CreateGoodsRequest request, Object loginId) {
         Goods goods = modelMapper.map(request, Goods.class);
-        goods.setCreatedBy((Serializable) loginId);
+        goods.setCreateBy((String) loginId);
         Goods savedGoods = goodsRepository.save(goods);
         return modelMapper.map(savedGoods, GoodsDTO.class);
     }

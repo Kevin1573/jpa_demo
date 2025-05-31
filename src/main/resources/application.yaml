@@ -11,9 +11,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        hbm2ddl:
+          auto: update
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update # create-drop
+
   h2:
     console:
       enabled: true

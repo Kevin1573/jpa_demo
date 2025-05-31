@@ -1,0 +1,9 @@
+<changeSet id="init-1" author="dev">
+    <createTable tableName="sp_goods">
+        <column name="id" type="bigint" autoIncrement="true">
+            <constraints primaryKey="true"/>
+        </column>
+        <column name="name" type="varchar(255)"/>
+        <!-- 其他初始列 -->
+    </createTable>
+</changeSet>
